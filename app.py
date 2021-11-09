@@ -106,4 +106,4 @@ def _add_attribute(existing, attribute_name, options, token_id, display_type=Non
     existing.append(trait)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
