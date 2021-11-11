@@ -91,7 +91,7 @@ def _compose_image(image_files, token_id):
     output_path = "static/output/%s.png" % token_id
     composite.save(output_path)
     #上传到IPFS
-    IPFSadd = _sortInIPFS("http://127.0.0.1:5000/"+output_path)
+    IPFSadd = _sortInIPFS(output_path)
     if IPFSadd != 1:
         print("IPFS地址：ipfs://"+IPFSadd["Hash"])
         return "ipfs://"+IPFSadd["Hash"]
@@ -101,8 +101,9 @@ def _compose_image(image_files, token_id):
 
 #存储到IPFS上
 def _sortInIPFS(path):
+    print("path:"+path)
     files = {
-        'file': path
+        'file': open(path, mode='rb')
     }
     response = requests.post("https://ipfs.infura.io:5001/api/v0/add",files=files,auth=("20dw9iCz9m3lnfxfliWrxQ5F5Xc", "b66819c2d0518decd526a85eb5e5a7a0"))
     if response.status_code == 200 :
