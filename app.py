@@ -18,7 +18,7 @@ EYE=list(range(1,10))
 FACE=list(range(1,10))
 MOUTH=list(range(1,10))
 NOSE=list(range(1,10))
-TOTAL= 666
+TOTAL= 667
 
 @app.route('/')
 def hello_world():  # put application's code here
@@ -36,22 +36,22 @@ def opera(token_id):
         else:
             #没有生成过
             background = BACKGROUND[token_id % len(BACKGROUND)]
-            ear = EAR[token_id % len(EAR)]
-            eye = EYE[token_id % len(EYE)]
-            face = FACE[token_id % len(FACE)]
-            mouth = MOUTH[token_id % len(MOUTH)]
-            nose = NOSE[token_id % len(NOSE)]
+            ear = random.choice(EAR)
+            eye = random.choice(EYE)
+            face = random.choice(FACE)
+            mouth = random.choice(MOUTH)
+            nose = random.choice(NOSE)
             print("{}-{}-{}-{}-{}-{}".format(background, ear, eye, face, mouth, nose))
             image_url = _compose_image(['static/background/{}.jpg'.format(background), 'static/ear/{}.png'.format(ear),
                                         'static/face/{}.png'.format(face), 'static/mouth/{}.png'.format(mouth),
                                         'static/nose/{}.png'.format(nose), 'static/eye/{}.png'.format(eye)], token_id)
             attributes = []
-            _add_attribute(attributes, 'background', BACKGROUND, token_id)
-            _add_attribute(attributes, 'ear', EAR, token_id)
-            _add_attribute(attributes, 'eye', EYE, token_id)
-            _add_attribute(attributes, 'face', FACE, token_id)
-            _add_attribute(attributes, 'mouth', MOUTH, token_id)
-            _add_attribute(attributes, 'nose', NOSE, token_id)
+            _add_attribute(attributes, 'background', BACKGROUND, int(token_id - 1))
+            _add_attribute(attributes, 'ear', EAR, ear)
+            _add_attribute(attributes, 'eye', EYE, eye)
+            _add_attribute(attributes, 'face', FACE, face)
+            _add_attribute(attributes, 'mouth', MOUTH, mouth)
+            _add_attribute(attributes, 'nose', NOSE, nose)
             # 级别游戏可用_add_attribute(attributes, 'level', INT_ATTRIBUTES, token_id)
             # 耐力游戏可用_add_attribute(attributes, 'stamina', FLOAT_ATTRIBUTES, token_id)
             # 性格游戏可用_add_attribute(attributes, 'personality', STR_ATTRIBUTES, token_id)
@@ -122,4 +122,4 @@ def _add_attribute(existing, attribute_name, options, token_id, display_type=Non
     existing.append(trait)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
